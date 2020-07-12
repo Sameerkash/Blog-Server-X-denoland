@@ -11,5 +11,7 @@ export {
 
 export { DataTypes, Database, Model } from "https://deno.land/x/denodb/mod.ts";
 
+export { oakCors } from "https://deno.land/x/cors/mod.ts"
+
 
 export * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";

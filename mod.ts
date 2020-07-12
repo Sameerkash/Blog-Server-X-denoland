@@ -1,6 +1,7 @@
 import { Application } from "./deps.ts";
+import { getDB } from "./utils/db.ts";
 import router from "./routes/routes.ts";
-import { connectSyncDb, getDB } from "./utils/db.ts";
+import { oakCors } from "./deps.ts";
 
 getDB();
 
@@ -14,6 +15,7 @@ app.addEventListener("listen", ({ hostname, port, secure }) => {
   );
 });
 
+app.use(oakCors());
 
 app.use(router.routes());
 app.use(router.allowedMethods());

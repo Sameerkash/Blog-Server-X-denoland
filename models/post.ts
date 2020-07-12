@@ -4,6 +4,10 @@ class Post extends Model {
   static table = "post";
   static timestamps = true;
 
+  static defaults = {
+    published: false,
+  };
+
   static fields = {
     _id: {
       primaryKey: true,
@@ -16,6 +20,9 @@ class Post extends Model {
     content: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    published: {
+      type: DataTypes.BOOLEAN,
     },
   };
 }

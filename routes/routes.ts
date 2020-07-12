@@ -3,8 +3,10 @@ import {
   getUsers,
   createUser,
   deleteUser,
+  updateUser,
 } from "../controller/user_controller.ts";
 import { RouterContext } from "../deps.ts";
+import { allPosts, createPost } from "../controller/post_controller.ts";
 
 const router = new Router();
 
@@ -18,6 +20,10 @@ router.post("/createUser", createUser);
 
 router.delete("/deleteUser", deleteUser);
 
-router.get("/posts");
+router.patch("/updateUser", updateUser);
+
+router.get("/posts", allPosts);
+
+router.get("/createPost", createPost);
 
 export default router;
