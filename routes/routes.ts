@@ -1,12 +1,7 @@
 import { Router } from "../deps.ts";
-import {
-  getUsers,
-  createUser,
-  deleteUser,
-  updateUser,
-} from "../controller/user_controller.ts";
+import * as userContorller from "../controller/user_controller.ts";
 import { RouterContext } from "../deps.ts";
-import { allPosts, createPost } from "../controller/post_controller.ts";
+import * as postController from "../controller/post_controller.ts";
 
 const router = new Router();
 
@@ -14,16 +9,20 @@ router.get("/", (ctx: RouterContext) => {
   ctx.response.body = { message: "Welcome to deno" };
 });
 
-router.get("/users", getUsers);
+router.get("/user/users", userContorller.getUsers);
 
-router.post("/createUser", createUser);
+router.post("/user/create", userContorller.createUser);
 
-router.delete("/deleteUser", deleteUser);
+router.delete("/user/delete", userContorller.deleteUser);
 
-router.patch("/updateUser", updateUser);
+router.patch("/user/update", userContorller.updateUser);
 
-router.get("/posts", allPosts);
+router.get("/post/posts", postController.allPosts);
 
-router.get("/createPost", createPost);
+router.post("/post/create", postController.createPost);
+
+router.patch("/post/update", postController.updatePost);
+
+router.delete("/post/delete", postController.deletePost);
 
 export default router;
