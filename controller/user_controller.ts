@@ -2,6 +2,7 @@ import User from "../models/user.ts";
 import { RouterContext } from "../deps.ts";
 import { checkBool } from "../utils/check.ts";
 import { getAuthToken } from "../utils/jwt.ts";
+import { bcrypt } from "../deps.ts";
 
 /// Gets all Users from the user collectoin
 export async function getUsers(ctx: RouterContext) {
@@ -54,10 +55,12 @@ export async function updateUser(ctx: RouterContext) {
 export async function signUp(ctx: RouterContext) {
   const body: any = await ctx.request.body();
 
+  const hashedPassword = await bcrypt.hash(body.value.password);
+
   const user = await User.create({
     name: body.value.name,
     email: body.value.email,
-    password: body.value.password,
+    password: hashedPassword,
   });
 
   const token = getAuthToken(user);
@@ -70,6 +73,33 @@ export async function signUp(ctx: RouterContext) {
     };
   } else {
     ctx.response.status = 400;
-    ctx.response.body = { error: "Could not create user" };
+    ctx.response.body = { error: "Could not find user" };
+  }
+}
+
+export async function signIn(ctx: RouterContext) {
+  const body: any = await ctx.request.body();
+  const user = await User.where("email", body.value.email).get();
+
+  if (user) {
+    const password = await bcrypt.compare(
+      body.value.password,
+      user[0].password
+    );
+    if (password) {
+      console.log(password);
+      const token = getAuthToken(user);
+      ctx.response.status = 200;
+      ctx.response.body = {
+        token: token,
+        user: user,
+      };
+    } else {
+      ctx.response.status = 400;
+      ctx.response.body = { error: "Invalid credentials" };
+    }
+  } else {
+    ctx.response.status = 400;
+    ctx.response.body = { error: "Could not find user" };
   }
 }

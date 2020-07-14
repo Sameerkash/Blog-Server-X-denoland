@@ -42,3 +42,6 @@ export async function deletePost(ctx: RouterContext) {
   const post = await Post.where("_id", body.value.id).delete();
   checkBool(post, ctx, "Deleted Successfully");
 }
+
+
+

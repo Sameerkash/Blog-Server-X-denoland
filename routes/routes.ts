@@ -15,6 +15,8 @@ router.post("/user/create", userContorller.createUser);
 
 router.post("/user/signup", userContorller.signUp);
 
+router.post("/user/signin", userContorller.signIn);
+
 router.delete("/user/delete", userContorller.deleteUser);
 
 router.patch("/user/update", userContorller.updateUser);
