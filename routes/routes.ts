@@ -13,6 +13,8 @@ router.get("/user/users", userContorller.getUsers);
 
 router.post("/user/create", userContorller.createUser);
 
+router.post("/user/signup", userContorller.signUp);
+
 router.delete("/user/delete", userContorller.deleteUser);
 
 router.patch("/user/update", userContorller.updateUser);

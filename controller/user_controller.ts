@@ -1,6 +1,7 @@
 import User from "../models/user.ts";
 import { RouterContext } from "../deps.ts";
 import { checkBool } from "../utils/check.ts";
+import { getAuthToken } from "../utils/jwt.ts";
 
 /// Gets all Users from the user collectoin
 export async function getUsers(ctx: RouterContext) {
@@ -11,7 +12,7 @@ export async function getUsers(ctx: RouterContext) {
 }
 
 export async function createUser(ctx: RouterContext) {
-  const body = await ctx.request.body();
+  const body: any = await ctx.request.body();
   const user = await User.create({
     name: body.value.name,
     email: body.value.email,
@@ -27,7 +28,7 @@ export async function createUser(ctx: RouterContext) {
 }
 
 export async function deleteUser(ctx: RouterContext) {
-  const body = await ctx.request.body();
+  const body: any = await ctx.request.body();
   if (body.value.email) {
     const user = await User.where("email", body.value.email).delete();
     checkBool(user, ctx, "successfully deleted");
@@ -41,11 +42,34 @@ export async function deleteUser(ctx: RouterContext) {
 }
 
 export async function updateUser(ctx: RouterContext) {
-  const body = await ctx.request.body();
+  const body: any = await ctx.request.body();
   const user = await User.where("_id", body.value.id).update({
     name: body.value.name,
     email: body.value.email,
     password: body.value.password,
   });
   checkBool(user, ctx, "successfully updated");
+}
+
+export async function signUp(ctx: RouterContext) {
+  const body: any = await ctx.request.body();
+
+  const user = await User.create({
+    name: body.value.name,
+    email: body.value.email,
+    password: body.value.password,
+  });
+
+  const token = getAuthToken(user);
+
+  if (user) {
+    ctx.response.status = 200;
+    ctx.response.body = {
+      token: token,
+      user: user,
+    };
+  } else {
+    ctx.response.status = 400;
+    ctx.response.body = { error: "Could not create user" };
+  }
 }

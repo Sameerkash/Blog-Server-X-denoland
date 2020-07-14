@@ -2,6 +2,7 @@ import { Application } from "./deps.ts";
 import { getDB } from "./utils/db.ts";
 import router from "./routes/routes.ts";
 import { oakCors } from "./deps.ts";
+import { middlewares } from "./middleware/middlewares.ts";
 
 getDB();
 
@@ -16,6 +17,8 @@ app.addEventListener("listen", ({ hostname, port, secure }) => {
 });
 
 app.use(oakCors());
+
+app.use(middlewares.JwtAuthMiddleware);
 
 app.use(router.routes());
 app.use(router.allowedMethods());

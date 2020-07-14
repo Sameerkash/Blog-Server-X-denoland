@@ -13,7 +13,7 @@ export async function allPosts(ctx: RouterContext) {
 }
 
 export async function createPost(ctx: RouterContext) {
-  const body = await ctx.request.body();
+  const body: any = await ctx.request.body();
   const post = await Post.create({
     title: body.value.title,
     content: body.value.content,
@@ -28,7 +28,7 @@ export async function createPost(ctx: RouterContext) {
 }
 
 export async function updatePost(ctx: RouterContext) {
-  const body = await ctx.request.body();
+  const body: any = await ctx.request.body();
   const post = await Post.where("_id", body.value.id).update({
     title: body.value.title,
     content: body.value.content,
@@ -38,7 +38,7 @@ export async function updatePost(ctx: RouterContext) {
 }
 
 export async function deletePost(ctx: RouterContext) {
-  const body = await ctx.request.body();
+  const body: any = await ctx.request.body();
   const post = await Post.where("_id", body.value.id).delete();
   checkBool(post, ctx, "Deleted Successfully");
 }
