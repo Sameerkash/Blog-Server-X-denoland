@@ -1,8 +1,9 @@
 import Post from "../models/post.ts";
 import { RouterContext } from "../deps.ts";
 import { checkBool } from "../utils/check.ts";
+import { userGuard } from "../middleware/usergaurd.ts";
 
-export async function allPosts(ctx: RouterContext) {
+export const allPosts = async (ctx: RouterContext) => {
   const posts = await Post.all();
   if (posts) {
     ctx.response.body = posts;
@@ -10,7 +11,7 @@ export async function allPosts(ctx: RouterContext) {
     ctx.response.status = 400;
     ctx.response.body = { error: "Something went wrong " };
   }
-}
+};
 
 export async function createPost(ctx: RouterContext) {
   const body: any = await ctx.request.body();
@@ -27,6 +28,7 @@ export async function createPost(ctx: RouterContext) {
   }
 }
 
+userGuard();
 export async function updatePost(ctx: RouterContext) {
   const body: any = await ctx.request.body();
   const post = await Post.where("_id", body.value.id).update({
@@ -42,6 +44,3 @@ export async function deletePost(ctx: RouterContext) {
   const post = await Post.where("_id", body.value.id).delete();
   checkBool(post, ctx, "Deleted Successfully");
 }
-
-
-

@@ -1,32 +1,24 @@
 import { Router } from "../deps.ts";
 import * as userContorller from "../controller/user_controller.ts";
 import { RouterContext } from "../deps.ts";
-import * as postController from "../controller/post_controller.ts";
+import { userGuard } from "../middleware/usergaurd.ts";
 
-const router = new Router();
+const userRoutes = new Router();
 
-router.get("/", (ctx: RouterContext) => {
+userRoutes.get("/", (ctx: RouterContext) => {
   ctx.response.body = { message: "Welcome to deno" };
 });
 
-router.get("/user/users", userContorller.getUsers);
+userRoutes.get("/user/users", userContorller.getUsers);
 
-router.post("/user/create", userContorller.createUser);
+userRoutes.post("/user/create", userContorller.createUser);
 
-router.post("/user/signup", userContorller.signUp);
+userRoutes.post("/user/signup", userContorller.signUp);
 
-router.post("/user/signin", userContorller.signIn);
+userRoutes.post("/user/signin", userContorller.signIn);
 
-router.delete("/user/delete", userContorller.deleteUser);
+userRoutes.delete("/user/delete", userGuard(), userContorller.deleteUser);
 
-router.patch("/user/update", userContorller.updateUser);
+userRoutes.patch("/user/update", userGuard(), userContorller.updateUser);
 
-router.get("/post/posts", postController.allPosts);
-
-router.post("/post/create", postController.createPost);
-
-router.patch("/post/update", postController.updatePost);
-
-router.delete("/post/delete", postController.deletePost);
-
-export default router;
+export default userRoutes;
