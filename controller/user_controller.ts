@@ -3,10 +3,18 @@ import { RouterContext } from "../deps.ts";
 import { checkBool } from "../utils/check.ts";
 import { getAuthToken } from "../utils/jwt.ts";
 import { bcrypt } from "../deps.ts";
+import { Context } from "../core/context.ts";
 
 /// Gets all Users from the user collectoin
 export async function getUsers(ctx: RouterContext) {
-  const users = await User.all();
+  const body = await ctx.request.body();
+  let users: [];
+
+  if (body.value.skip) {
+    users = await User.skip(body.value.skip).take(body.value.take).get();
+  } else {
+    users = await User.take(body.value.take).get();
+  }
 
   ctx.response.status = 200;
   ctx.response.body = users;
@@ -102,4 +110,14 @@ export async function signIn(ctx: RouterContext) {
     ctx.response.status = 400;
     ctx.response.body = { error: "Could not find user" };
   }
+}
+
+export async function profile(ctx: RouterContext) {
+  const req = await ctx.request.body();
+  const userId = req.value.userId;
+
+  const user = await User.where("_id", userId).get();
+
+  ctx.response.status = 200;
+  ctx.response.body = user;
 }

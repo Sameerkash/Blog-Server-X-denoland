@@ -4,7 +4,16 @@ import { checkBool } from "../utils/check.ts";
 import { userGuard } from "../middleware/usergaurd.ts";
 
 export const allPosts = async (ctx: RouterContext) => {
-  const posts = await Post.all();
+  const body = await ctx.request.body();
+  
+  let posts: [];
+
+  if (body.value.skip) {
+    posts = await Post.skip(body.value.skip).take(body.value.take).get();
+  } else {
+    posts = await Post.take(body.value.take).get();
+  }
+
   if (posts) {
     ctx.response.body = posts;
   } else {
@@ -28,7 +37,6 @@ export async function createPost(ctx: RouterContext) {
   }
 }
 
-userGuard();
 export async function updatePost(ctx: RouterContext) {
   const body: any = await ctx.request.body();
   const post = await Post.where("_id", body.value.id).update({

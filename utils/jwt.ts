@@ -1,4 +1,4 @@
-import { makeJwt, Jose, Payload, setExpiration, validateJwt } from "../deps.ts";
+import { makeJwt, Jose, Payload, setExpiration, validateJwt  } from "../deps.ts";
 
 const header: Jose = {
   alg: "HS256",
@@ -31,7 +31,7 @@ const getRefreshToken = (user: any) => {
 const getJwtPayload = async (token: string): Promise<any | null> => {
   try {
     const jwtObject = await validateJwt(token, "SECRETKEY");
-    if (jwtObject && jwtObject.jwt) {
+    if (jwtObject && jwtObject.jwt) { 
       return jwtObject.jwt;
     }
   } catch {}

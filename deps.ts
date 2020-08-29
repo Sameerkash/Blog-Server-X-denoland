@@ -10,11 +10,11 @@ export {
   httpErrors
 } from "https://deno.land/x/oak@v5.3.1/mod.ts";
 
-export { DataTypes, Database, Model } from "https://deno.land/x/denodb@v1.0.4/mod.ts";
+export { DataTypes, Database, Model , Relationships} from "https://deno.land/x/denodb@v1.0.4/mod.ts";
 
 export { oakCors } from "https://deno.land/x/cors/mod.ts";
 
-export { validateJwt } from "https://deno.land/x/djwt/validate.ts";
+export { validateJwt , parseAndDecode, } from "https://deno.land/x/djwt/validate.ts";
 
 export {
   makeJwt,

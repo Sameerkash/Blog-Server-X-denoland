@@ -9,7 +9,7 @@ userRoutes.get("/", (ctx: RouterContext) => {
   ctx.response.body = { message: "Welcome to deno" };
 });
 
-userRoutes.get("/user/users", userContorller.getUsers);
+userRoutes.get("/user/users", userGuard(), userContorller.getUsers);
 
 userRoutes.post("/user/create", userContorller.createUser);
 
@@ -20,5 +20,7 @@ userRoutes.post("/user/signin", userContorller.signIn);
 userRoutes.delete("/user/delete", userGuard(), userContorller.deleteUser);
 
 userRoutes.patch("/user/update", userGuard(), userContorller.updateUser);
+
+userRoutes.get("/user/profile", userGuard(), userContorller.profile);
 
 export default userRoutes;

@@ -9,12 +9,10 @@ const db = new Database("mongo", {
 
 db.link([User, Post]);
 
-async function connectSyncDb() {
-  await db.sync();
-}
+await db.sync();
 
 function getDB() {
   return db;
 }
 
-export { connectSyncDb, getDB };
+export { getDB };

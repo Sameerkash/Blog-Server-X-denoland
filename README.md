@@ -14,7 +14,7 @@
 - [x] Basic CRUD operations for Post model
 - [x] Authentication with djwt 
 - [ ] Validation objects
-- [ ] Integrate Auth middleware and secure routes
+- [x] Integrate Auth middleware and secure routes
 - [ ] Media Uplaod support 
 - [ ] Pagination 
 - [ ] Search and sorting 

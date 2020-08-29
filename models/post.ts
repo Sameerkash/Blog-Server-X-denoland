@@ -1,4 +1,5 @@
-import { Model, DataTypes } from "../deps.ts";
+import { Model, DataTypes, Relationships } from "../deps.ts";
+import User from "./user.ts";
 
 class Post extends Model {
   static table = "post";
@@ -7,6 +8,10 @@ class Post extends Model {
   static defaults = {
     published: false,
   };
+
+  static user() {
+    return this.hasOne(User);
+  }
 
   static fields = {
     _id: {
@@ -24,6 +29,7 @@ class Post extends Model {
     published: {
       type: DataTypes.BOOLEAN,
     },
+    // userId: Relationships.belongsTo(User),
   };
 }
 

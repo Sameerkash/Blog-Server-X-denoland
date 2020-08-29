@@ -4,7 +4,7 @@ import { userGuard } from "../middleware/usergaurd.ts";
 
 const postRoutes = new Router();
 
-postRoutes.get("/post/posts", userGuard(), postController.allPosts);
+postRoutes.post("/post/posts", userGuard(), postController.allPosts);
 
 postRoutes.post("/post/create", userGuard(), postController.createPost);
 
