@@ -16,7 +16,7 @@
 - [ ] Validation objects
 - [x] Integrate Auth middleware and secure routes
 - [ ] Media Uplaod support 
-- [ ] Pagination 
+- [x] Pagination 
 - [ ] Search and sorting 
 - [ ] Optimized Feed per user.
 
